@@ -22,6 +22,9 @@
     ],
     "rules": {
       "prettier/prettier": "error",
+      "camelcase":"off",
+      "import/prefer-default-export": "off",
+      "class-methods-use-this":"off",
       "no-use-before-define": "off",
       "@typescript-eslint/no-use-before-define": [
         "error"
@@ -32,6 +35,19 @@
         {
           "ts": "never"
         }
-      ]
+      ],
+      "import/no-unresolved": "off",
+      "@typescript-eslint/no-unused-vars": ["error", {
+        "argsIgnorePattern": "_"
+      }]
+    },
+    "settings": {
+      "import/resolver": {
+        "node": {
+          "extensions": [
+            ".ts"
+          ]
+        }
+      }
     }
 }
