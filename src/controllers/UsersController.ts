@@ -1,8 +1,10 @@
 import { Request, Response } from 'express';
 import { getCustomRepository } from 'typeorm';
 import { hash } from 'bcryptjs';
+import { resolve } from 'path';
 import { AppError } from '../errors/AppError';
 import UsersRepository from '../repositories/UsersRepository';
+import MailService from '../services/MailService';
 
 class UsersController {
   async store(request: Request, response: Response) {
@@ -17,8 +19,8 @@ class UsersController {
     }
 
     const hashedPassword = await hash(password, 8);
-
     const code = Math.floor(Math.random() * 99999);
+
     const user = usersRepository.create({
       name,
       lastname,
@@ -28,6 +30,24 @@ class UsersController {
       status: 'common',
     });
     await usersRepository.save(user);
+
+    const mailService = new MailService();
+
+    const templatePath = resolve(
+      __dirname,
+      '..',
+      'views',
+      'emails',
+      'userRegistration.hbs',
+    );
+    const variables = { name, code };
+
+    await mailService.execute({
+      to: email,
+      subject: 'Confirmação de cadastro',
+      variables,
+      templatePath,
+    });
 
     return response.status(201).json(user);
   }
