@@ -12,7 +12,6 @@ interface IRequest {
 }
 
 interface IResponse {
-  user: User;
   token: string;
 }
 
@@ -41,7 +40,7 @@ class AuthenticateUserService {
       expiresIn: this.expiresIn,
     });
 
-    return { user, token };
+    return { token };
   }
 }
 

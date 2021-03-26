@@ -10,9 +10,9 @@ class SessionController {
 
     const authenticateUser = new AuthenticateUserService();
 
-    const { user, token } = await authenticateUser.execute({ email, password });
+    const { token } = await authenticateUser.execute({ email, password });
 
-    return response.json({ user, token });
+    return response.json({ token });
   }
 
   async update(request: Request, response: Response) {
