@@ -1,7 +1,11 @@
 import { Request, Response } from 'express';
 import { getCustomRepository } from 'typeorm';
+import { resolve } from 'path';
+
 import SocioeconomicRepository from '../repositories/SubscribersSocioeconomicRepository';
 import UsersRepository from '../repositories/UsersRepository';
+import MailService from '../services/MailService';
+import User from '../models/User';
 
 class SubscribersSocioeconomicController {
   async store(request: Request, response: Response) {
@@ -82,30 +86,59 @@ class SubscribersSocioeconomicController {
 
     const usersRepository = getCustomRepository(UsersRepository);
 
-    const subscribersUsers = await usersRepository.find({
-      status: 'subscriber',
+    const users = await usersRepository.find({
+      where: [{ status: 'subscriber' }, { id }],
     });
 
-    const subscribersTotal = subscribersUsers.length;
+    const subscribersTotal = users.length - 1;
     const enrollment = subscribersTotal + 1935;
     const userUpdate = {
       status: '',
       enrollment,
     };
+    const subscriber = users.find((user: User) => user.id === id);
+    const templatePath = resolve(
+      __dirname,
+      '..',
+      'views',
+      'emails',
+      'userSubscriber.hbs',
+    );
+    const filePath = resolve(
+      __dirname,
+      '..',
+      'views',
+      'emails',
+      'termo_responsabilidade.pdf',
+    );
+    const variables = {
+      name: subscriber.name,
+      enrollment: subscriber.enrollment,
+      description: 'lista regular',
+    };
 
     if (subscribersTotal <= 79) {
-      // lista regular (send mail)
       userUpdate.status = 'subscriber';
     } else if (subscribersTotal > 79 && subscribersTotal <= 119) {
-      // lista de espera (send mail)
       userUpdate.status = 'waiting';
+      variables.description =
+        'lista de espera (lembramos que você precisa participar de todas as etapas igualmente)';
     } else {
       // lista cheia (send mail)
     }
 
+    const mailService = new MailService();
+    await mailService.execute({
+      to: subscriber.email,
+      subject: 'Confirmação de inscrição',
+      variables,
+      templatePath,
+      filePath,
+    });
+
     await usersRepository.update({ id }, userUpdate);
 
-    return response.status(201).json({ subscribersUsers, socioeconomic });
+    return response.status(201).json(socioeconomic);
   }
 }
 
