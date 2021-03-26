@@ -13,9 +13,9 @@ interface IMail {
 class MailService {
   private transporter: Transporter;
 
-  private sender = process.env.EMAILUSER;
+  private sender = process.env.EMAIL_USER;
 
-  private senderPassword = process.env.EMAILPASSWORD;
+  private senderPassword = process.env.EMAIL_PASSWORD;
 
   constructor() {
     const transporter = nodemailer.createTransport({
