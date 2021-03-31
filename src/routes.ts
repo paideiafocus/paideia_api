@@ -1,6 +1,9 @@
 import { Router } from 'express';
+import RecoverPasswordController from './controllers/RecoverPasswordController';
 import SessionController from './controllers/SessionController';
 import SubscribersCandidatesController from './controllers/SubscribersCandidatesController';
+import SubscribersController from './controllers/SubscribersController';
+import SubscribersFilesController from './controllers/SubscribersFilesController';
 import SubscribersSocioeconomicController from './controllers/SubscribersSocioeconomicController';
 import UsersController from './controllers/UsersController';
 import ensureAuthenticated from './middlewares/ensureAuthenticated';
@@ -11,54 +14,22 @@ const usersController = new UsersController();
 const sessionController = new SessionController();
 const subscribersCandidatesController = new SubscribersCandidatesController();
 const subscribersSocioeconomicController = new SubscribersSocioeconomicController();
+const subscribersFilesController = new SubscribersFilesController();
+const subscribersController = new SubscribersController();
+const recoverPasswordController = new RecoverPasswordController();
 
 router.post('/users', usersController.store);
 router.post('/auth', sessionController.store);
+router.post('/password/recover', recoverPasswordController.store);
+router.post('/password/validate', recoverPasswordController.show);
+router.put('/password/update', recoverPasswordController.update);
 
 router.use(ensureAuthenticated);
 router.put('/auth/validate', sessionController.update);
 router.post('/candidate', subscribersCandidatesController.store);
 router.post('/socioeconomic', subscribersSocioeconomicController.store);
+router.post('/files', subscribersFilesController.store);
 
-// const mailService = new MailService();
-//   const npsPath = resolve(
-//     __dirname,
-//     '..',
-//     'views',
-//     'emails',
-//     'userRegistration.hbs',
-//   );
-//   const filePath = resolve(
-//     __dirname,
-//     '..',
-//     'views',
-//     'emails',
-//     'termo_responsabilidade.pdf',
-//   );
-//   const variables = {
-//     name,
-//     enrollment: user.enrollment,
-//     description: 'lista regular',
-//   };
-//   const variables2 = {
-//     name,
-//     enrollment: user.enrollment,
-//     description:
-//       'lista de espera (lembramos que você precisa participar de todas as etapas igualmente)',
-//   };
-//   await mailService.execute(
-//     email,
-//     'Confirmação de inscrição',
-//     variables,
-//     npsPath,
-//     filePath,
-//   );
-//   await mailService.execute(
-//     email,
-//     'Confirmação de inscrição',
-//     variables2,
-//     npsPath,
-//     filePath,
-//   );
+router.get('/subscribers', subscribersController.index);
 
 export default router;
