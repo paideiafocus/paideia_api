@@ -1,7 +1,7 @@
 import { EntityRepository, Repository } from 'typeorm';
-import Candidates from '../models/Candidates';
+import Candidate from '../models/Candidate';
 
-@EntityRepository(Candidates)
-class CandidatesRepository extends Repository<Candidates> {}
+@EntityRepository(Candidate)
+class CandidatesRepository extends Repository<Candidate> {}
 
 export default CandidatesRepository;
