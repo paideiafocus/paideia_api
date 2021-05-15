@@ -15,7 +15,7 @@ class UsersController {
     const userAlreadyExists = await usersRepository.findOne({ email });
 
     if (userAlreadyExists) {
-      throw new AppError('User already exists!');
+      throw new AppError('Já existe um usuário cadastrado com esse e-mail!');
     }
 
     const hashedPassword = await hash(password, 8);
@@ -49,7 +49,11 @@ class UsersController {
       templatePath,
     });
 
-    return response.status(201).json(user);
+    delete user.code;
+    delete user.password;
+    delete user.status;
+
+    response.status(201).json(user);
   }
 }
 
