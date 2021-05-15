@@ -1,5 +1,6 @@
 import 'reflect-metadata';
 import express, { Request, Response, NextFunction } from 'express';
+import cors from 'cors';
 import 'express-async-errors';
 import createConnection from './database';
 import router from './routes';
@@ -8,7 +9,7 @@ import { AppError } from './errors/AppError';
 createConnection();
 const app = express();
 
-// app.use(cors()); // ALLOW ONLY FRON URL REQUEST
+app.use(cors()); // ALLOW ONLY FROM URL REQUEST
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json({ limit: '20mb' }));
 app.use(router);
