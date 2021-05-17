@@ -10,9 +10,9 @@ class SessionController {
 
     const authenticateUser = new AuthenticateUserService();
 
-    const { token } = await authenticateUser.execute({ email, password });
+    const { token, user } = await authenticateUser.execute({ email, password });
 
-    return response.json({ token });
+    response.json({ token, status: user.status });
   }
 
   async update(request: Request, response: Response) {
@@ -26,7 +26,7 @@ class SessionController {
     const user = await usersRepository.findOne({ id, code });
 
     if (!user) {
-      throw new AppError('Invalid code!');
+      throw new AppError('Código inválido!');
     }
 
     await usersRepository.update({ id }, { status: 'active' });
