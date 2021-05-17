@@ -24,7 +24,7 @@ class RecoverPasswordController {
     const user = await usersRepository.findOne({ email });
 
     if (!user) {
-      throw new AppError('E-mail not found!');
+      throw new AppError('E-mail não encontrado!');
     }
 
     const passwordRecoveryService = new PasswordRecoveryService();

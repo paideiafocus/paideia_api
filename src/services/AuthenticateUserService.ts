@@ -13,6 +13,7 @@ interface IRequest {
 
 interface IResponse {
   token: string;
+  user: User;
 }
 
 class AuthenticateUserService {
@@ -26,13 +27,13 @@ class AuthenticateUserService {
     const user = await usersRepository.findOne({ where: { email } });
 
     if (!user) {
-      throw new AppError('Incorrect email/password combination.', 401);
+      throw new AppError('E-mail ou senha incorretos.');
     }
 
     const passwordMatched = await compare(password, user.password);
 
     if (!passwordMatched) {
-      throw new AppError('Incorrect email/password combination.', 401);
+      throw new AppError('E-mail ou senha incorretos.');
     }
 
     const token = sign({}, this.secret, {
@@ -40,7 +41,7 @@ class AuthenticateUserService {
       expiresIn: this.expiresIn,
     });
 
-    return { token };
+    return { token, user };
   }
 }
 
