@@ -44,7 +44,7 @@ class RecoverPasswordController {
     );
     const variables = {
       name: user.name,
-      link: `${process.env.SITE_BASE_URL}/${token}`,
+      link: `${process.env.SITE_BASE_URL}/nova-senha/${token}`,
     };
 
     await mailService.execute({
@@ -54,7 +54,7 @@ class RecoverPasswordController {
       templatePath,
     });
 
-    return response.json({ token });
+    response.status(204).json({});
   }
 
   async show(request: Request, response: Response) {
@@ -91,21 +91,21 @@ class RecoverPasswordController {
       const user = await usersRepository.findOne({ id: sub });
 
       if (!user) {
-        throw new AppError('Invalid token!', 401);
+        throw new AppError('Token inválido!', 401);
       }
 
       const hashedPassword = await hash(newPassword, 8);
       await usersRepository.update({ id: sub }, { password: hashedPassword });
     } catch {
-      throw new AppError('Invalid token!', 401);
+      throw new AppError('Token inválido!', 401);
     }
 
     if (newPassword !== confirmNewPassword) {
-      throw new AppError('Password not match!');
+      throw new AppError('Senhas estão diferente!');
     }
 
     return response.json({
-      message: 'Password successfully changed',
+      message: 'Senha alterada com sucesso!',
     });
   }
 }
