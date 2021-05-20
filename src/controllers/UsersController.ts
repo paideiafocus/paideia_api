@@ -55,6 +55,10 @@ class UsersController {
 
     response.status(201).json(user);
   }
+
+  async execute(request: Request, response: Response) {
+    response.status(204).json({});
+  }
 }
 
 export default UsersController;

@@ -25,6 +25,7 @@ router.post('/password/validate', recoverPasswordController.show);
 router.put('/password/update', recoverPasswordController.update);
 
 router.use(ensureAuthenticated);
+router.get('/users/validate/token', usersController.execute);
 router.put('/auth/validate', sessionController.update);
 router.post('/candidate', subscribersCandidatesController.store);
 router.post('/socioeconomic', subscribersSocioeconomicController.store);
