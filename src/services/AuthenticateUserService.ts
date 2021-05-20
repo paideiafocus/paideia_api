@@ -36,10 +36,16 @@ class AuthenticateUserService {
       throw new AppError('E-mail ou senha incorretos.');
     }
 
-    const token = sign({}, this.secret, {
-      subject: user.id,
-      expiresIn: this.expiresIn,
-    });
+    const token = sign(
+      {
+        status: user.status,
+      },
+      this.secret,
+      {
+        subject: user.id,
+        expiresIn: this.expiresIn,
+      },
+    );
 
     return { token, user };
   }
