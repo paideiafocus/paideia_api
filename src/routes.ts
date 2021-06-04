@@ -31,6 +31,7 @@ router.post('/candidate', subscribersCandidatesController.store);
 router.post('/socioeconomic', subscribersSocioeconomicController.store);
 router.post('/files', subscribersFilesController.store);
 
+router.get('/files/:userId', subscribersFilesController.index);
 router.get('/subscribers', subscribersController.index);
 
 export default router;
