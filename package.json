@@ -8,7 +8,8 @@
   "license": "MIT",
   "scripts": {
     "dev": "ts-node-dev --transpile-only --ignore-watch node_modules src/server.ts",
-    "build": "npx rimraf build && tsc",
+    "copy:assets": "npx cpx \"src/views/**\" \"build/src/views\"",
+    "build": "npx rimraf build && tsc && yarn copy:assets",
     "start": "node build/src/server.js",
     "sucrase": "sucrase ./src -d ./build --transforms typescript,imports",
     "build2": "babel src --extensions \".js,.ts\" --out-dir build --copy-files",
