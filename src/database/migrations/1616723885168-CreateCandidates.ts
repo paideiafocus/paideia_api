@@ -9,11 +9,13 @@ export class CreateCandidates1616723885168 implements MigrationInterface {
           {
             name: 'id',
             type: 'varchar',
+            length: '190',
             isPrimary: true,
           },
           {
             name: 'user_id',
             type: 'varchar',
+            length: '190',
           },
           {
             name: 'citizen',

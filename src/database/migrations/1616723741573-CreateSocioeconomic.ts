@@ -9,11 +9,13 @@ export class CreateSocioeconomic1616723741573 implements MigrationInterface {
           {
             name: 'id',
             type: 'varchar',
+            length: '190',
             isPrimary: true,
           },
           {
             name: 'user_id',
             type: 'varchar',
+            length: '190',
           },
           {
             name: 'cinema',

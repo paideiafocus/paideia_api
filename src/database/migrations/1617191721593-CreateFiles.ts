@@ -9,10 +9,12 @@ export class CreateFiles1617191721593 implements MigrationInterface {
           {
             name: 'id',
             type: 'varchar',
+            length: '190',
             isPrimary: true,
           },
           {
             name: 'user_id',
+            length: '190',
             type: 'varchar',
           },
           {
