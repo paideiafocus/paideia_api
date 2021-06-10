@@ -4,16 +4,17 @@ const port = process.env.DB_PORT;
 const username = process.env.DB_USER;
 const password = process.env.DB_PASSWORD || '' ;
 
-console.log('process.env.DB_NAME');
-console.log(process.env.DB_NAME);
-console.log('process.env.DB_HOST');
-console.log(process.env.DB_HOST);
-console.log('process.env.DB_PORT');
-console.log(process.env.DB_PORT);
-console.log('process.env.DB_USER');
-console.log(process.env.DB_USER);
-console.log('process.env.DB_PASSWORD');
-console.log(process.env.DB_PASSWORD);
+const env = process.env.ENVIRONMENT || 'dev';
+const buildPath = env === 'prod' ? 'build/' : '';
+const fileExtension = env === 'prod' ? 'js' : 'ts';
+const migrations = `./${buildPath}src/database/migrations/**.${fileExtension}`;
+const entities = `./${buildPath}src/models/**.${fileExtension}`;
+const migrationsDir = `./${buildPath}src/database/migrations`
+
+// console.log('process.env.DB_NAME');
+// console.log(process.env);
+console.log(env)
+console.log(entities)
 
 module.exports = {
   type: "mysql",
@@ -22,10 +23,10 @@ module.exports = {
   port,
   username,
   password,
-  migrations: ["./build/src/database/migrations/**.js"],
-  entities: ["./build/src/models/**.js"],
+  migrations: [migrations],
+  entities: [entities],
   logging: false,
   cli: {
-    "migrationsDir": "./build/src/database/migrations"
+    "migrationsDir": migrationsDir
   }
 }

@@ -8,13 +8,11 @@ import MailService from '../services/MailService';
 
 class UsersController {
   async store(request: Request, response: Response) {
-    console.log('caiu create user');
     const { name, lastname, email, password } = request.body;
 
     const usersRepository = getCustomRepository(UsersRepository);
 
     const userAlreadyExists = await usersRepository.findOne({ email });
-    console.log('caiu user primeira query');
 
     if (userAlreadyExists) {
       throw new AppError('Já existe um usuário cadastrado com esse e-mail!');
@@ -44,8 +42,6 @@ class UsersController {
     );
     const variables = { name, code };
 
-    console.log('caiu user segunda query');
-
     await mailService.execute({
       to: email,
       subject: 'Confirmação de cadastro',
@@ -56,8 +52,6 @@ class UsersController {
     delete user.code;
     delete user.password;
     delete user.status;
-
-    console.log('caiu user terceira query');
 
     response.status(201).json(user);
   }
