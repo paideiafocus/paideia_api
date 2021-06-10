@@ -32,3 +32,7 @@ Executar testes: `yarn test`
 - store: Criar novo registro;
 - update: Alterar um registro;
 - destroy: Remover um registro;
+
+## Config vars
+
+Disponível no settings da hospedagem (heroku)
