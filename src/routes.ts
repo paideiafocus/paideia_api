@@ -33,5 +33,6 @@ router.post('/files', subscribersFilesController.store);
 
 router.get('/files/:userId', subscribersFilesController.index);
 router.get('/subscribers', subscribersController.index);
+router.get('/subscribers/:userId', subscribersController.show);
 
 export default router;
