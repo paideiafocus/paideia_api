@@ -9,7 +9,7 @@
   "scripts": {
     "dev": "ts-node-dev --transpile-only --ignore-watch node_modules src/server.ts",
     "build": "tsc",
-    "start": "yarn build && node --experimental-specifier-resolution=node build/src/server.js",
+    "start": "node --experimental-specifier-resolution=node build/src/server.js",
     "sucrase": "sucrase ./src -d ./build --transforms typescript,imports",
     "build2": "babel src --extensions \".js,.ts\" --out-dir build --copy-files",
     "start2": "ts-node-dev src/server.ts",
