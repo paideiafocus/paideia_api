@@ -20,7 +20,29 @@ class SubscribersCandidatesController {
 
     const candidatesRepository = getCustomRepository(CandidatesRepository);
 
-    const candidate = candidatesRepository.create({
+    const candidates = await candidatesRepository.find({ user_id: id });
+
+    if (candidates.length !== 0) {
+      await candidatesRepository.update(
+        { user_id: id },
+        {
+          citizen,
+          birth_city,
+          cpf,
+          course,
+          birth_date,
+          state,
+          fullname,
+          rg,
+          phone1,
+          phone2,
+        },
+      );
+
+      return response.status(200).json(candidates);
+    }
+
+    const newCandidate = candidatesRepository.create({
       user_id: id,
       citizen,
       birth_city,
@@ -33,9 +55,9 @@ class SubscribersCandidatesController {
       phone1,
       phone2,
     });
-    await candidatesRepository.save(candidate);
+    await candidatesRepository.save(newCandidate);
 
-    return response.status(201).json(candidate);
+    return response.status(201).json(newCandidate);
   }
 }
 

@@ -14,16 +14,22 @@ class SubscribersFilesController {
 
     const filesRepository = getCustomRepository(FilesRepository);
 
+    const files = await filesRepository.find({ user_id: id });
+
+    if (files.length !== 0) {
+      await filesRepository.delete({ user_id: id });
+    }
+
     const formattedFiles: [File] = filesList.map((file: File) => ({
       user_id: id,
       ...file,
     }));
 
-    const files = filesRepository.create(formattedFiles);
+    const newFiles = filesRepository.create(formattedFiles);
 
-    await filesRepository.save(files);
+    await filesRepository.save(newFiles);
 
-    response.status(201).json(files);
+    return response.status(201).json(newFiles);
   }
 
   async index(request: Request, response: Response) {

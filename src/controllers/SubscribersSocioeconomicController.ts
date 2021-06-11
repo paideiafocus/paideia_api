@@ -56,12 +56,7 @@ class SubscribersSocioeconomicController {
       internet_quality,
     } = request.body;
 
-    const socioeconomicRepository = getCustomRepository(
-      SocioeconomicRepository,
-    );
-
-    const socioeconomic = socioeconomicRepository.create({
-      user_id: id,
+    const bodyData = {
       cinema,
       sports,
       exam_entrance,
@@ -105,6 +100,22 @@ class SubscribersSocioeconomicController {
       pc_shared,
       study_local,
       internet_quality,
+    };
+
+    const socioeconomicRepository = getCustomRepository(
+      SocioeconomicRepository,
+    );
+
+    const socioeconomics = await socioeconomicRepository.find({ user_id: id });
+
+    if (socioeconomics.length !== 0) {
+      await socioeconomicRepository.update({ user_id: id }, bodyData);
+      return response.status(200).json(socioeconomics);
+    }
+
+    const socioeconomic = socioeconomicRepository.create({
+      user_id: id,
+      ...bodyData,
     });
     await socioeconomicRepository.save(socioeconomic);
 
@@ -162,7 +173,7 @@ class SubscribersSocioeconomicController {
 
     await usersRepository.update({ id }, userUpdate);
 
-    response.status(201).json(socioeconomic);
+    return response.status(201).json(socioeconomic);
   }
 }
 
