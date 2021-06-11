@@ -42,6 +42,18 @@ class SubscribersSocioeconomicController {
       work_study,
       work_father,
       transport,
+      participate_ead,
+      understand_ead,
+      local_quarantine,
+      unprotected_people,
+      responsibilities,
+      smartphone,
+      internet_smartphone,
+      internet_smartphone_limit,
+      equips,
+      pc_shared,
+      study_local,
+      internet_quality,
     } = request.body;
 
     const socioeconomicRepository = getCustomRepository(
@@ -81,6 +93,18 @@ class SubscribersSocioeconomicController {
       work_study,
       work_father,
       transport,
+      participate_ead,
+      understand_ead,
+      local_quarantine,
+      unprotected_people,
+      responsibilities,
+      smartphone,
+      internet_smartphone,
+      internet_smartphone_limit,
+      equips,
+      pc_shared,
+      study_local,
+      internet_quality,
     });
     await socioeconomicRepository.save(socioeconomic);
 
@@ -138,7 +162,7 @@ class SubscribersSocioeconomicController {
 
     await usersRepository.update({ id }, userUpdate);
 
-    return response.status(201).json(socioeconomic);
+    response.status(201).json(socioeconomic);
   }
 }
 

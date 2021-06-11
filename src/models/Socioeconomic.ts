@@ -10,7 +10,7 @@ import { v4 as uuid } from 'uuid';
 import User from './User';
 
 @Entity('socioeconomic')
-class Candidates {
+class Socioeconomic {
   @PrimaryColumn()
   readonly id: string;
 
@@ -120,6 +120,42 @@ class Candidates {
   @CreateDateColumn()
   created_at: Date;
 
+  @Column()
+  participate_ead: string;
+
+  @Column()
+  understand_ead: string;
+
+  @Column()
+  local_quarantine: string;
+
+  @Column()
+  unprotected_people: string;
+
+  @Column()
+  responsibilities: string;
+
+  @Column()
+  smartphone: string;
+
+  @Column()
+  internet_smartphone: string;
+
+  @Column()
+  internet_smartphone_limit: string;
+
+  @Column()
+  equips: string;
+
+  @Column()
+  pc_shared: string;
+
+  @Column()
+  study_local: string;
+
+  @Column()
+  internet_quality: string;
+
   constructor() {
     if (!this.id) {
       this.id = uuid();
@@ -127,4 +163,4 @@ class Candidates {
   }
 }
 
-export default Candidates;
+export default Socioeconomic;

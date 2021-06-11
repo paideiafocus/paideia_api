@@ -151,6 +151,54 @@ export class CreateSocioeconomic1616723741573 implements MigrationInterface {
             type: 'timestamp',
             default: 'now()',
           },
+          {
+            name: 'participate_ead',
+            type: 'varchar',
+          },
+          {
+            name: 'understand_ead',
+            type: 'varchar',
+          },
+          {
+            name: 'local_quarantine',
+            type: 'varchar',
+          },
+          {
+            name: 'unprotected_people',
+            type: 'varchar',
+          },
+          {
+            name: 'responsibilities',
+            type: 'varchar',
+          },
+             {
+            name: 'smartphone',
+            type: 'varchar',
+          },
+          {
+            name: 'internet_smartphone',
+            type: 'varchar',
+          },
+          {
+            name: 'internet_smartphone_limit',
+            type: 'varchar',
+          },
+          {
+            name: 'equips',
+            type: 'varchar',
+          },
+             {
+            name: 'pc_shared',
+            type: 'varchar',
+          },
+          {
+            name: 'study_local',
+            type: 'varchar',
+          },
+          {
+            name: 'internet_quality',
+            type: 'varchar',
+          },
         ],
         foreignKeys: [
           {

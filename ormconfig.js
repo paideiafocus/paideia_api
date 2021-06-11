@@ -11,11 +11,6 @@ const migrations = `./${buildPath}src/database/migrations/**.${fileExtension}`;
 const entities = `./${buildPath}src/models/**.${fileExtension}`;
 const migrationsDir = `./${buildPath}src/database/migrations`
 
-// console.log('process.env.DB_NAME');
-// console.log(process.env);
-console.log(env)
-console.log(entities)
-
 module.exports = {
   type: "mysql",
   database,
