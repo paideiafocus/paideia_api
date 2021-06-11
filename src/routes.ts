@@ -18,7 +18,9 @@ const subscribersFilesController = new SubscribersFilesController();
 const subscribersController = new SubscribersController();
 const recoverPasswordController = new RecoverPasswordController();
 
-router.post('/teste', (request: Request, response: Response)=>{return response.json({ok: true}); });
+router.post('/teste', (request: Request, response: Response) => {
+  return response.json({ ok: true });
+});
 router.post('/users', usersController.store);
 router.post('/auth', sessionController.store);
 router.post('/password/recover', recoverPasswordController.store);

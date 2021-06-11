@@ -31,9 +31,17 @@ class SessionController {
 
     await usersRepository.update({ id }, { status: 'active' });
 
-    return response.json({
+    const authenticateUser = new AuthenticateUserService();
+
+    const responseAuth = await authenticateUser.execute({
+      email: user.email,
+      password: user.password,
+    });
+
+    response.json({
       message: 'code updated successfully',
       status: 'active',
+      token: responseAuth.token,
     });
   }
 }
