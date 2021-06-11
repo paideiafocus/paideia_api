@@ -30,7 +30,9 @@ class AuthenticateUserService {
       throw new AppError('E-mail ou senha incorretos.');
     }
 
-    const passwordMatched = await compare(password, user.password);
+    const matchCryptWithCrypt = password === user.password;
+    const matchNormalWithCrypt = await compare(password, user.password);
+    const passwordMatched = matchNormalWithCrypt || matchCryptWithCrypt;
 
     if (!passwordMatched) {
       throw new AppError('E-mail ou senha incorretos.');
