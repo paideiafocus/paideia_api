@@ -23,7 +23,7 @@ export class CreateFiles1617191721593 implements MigrationInterface {
           },
           {
             name: 'file',
-            type: 'text',
+            type: 'longtext',
           },
           {
             name: 'updated_at',
