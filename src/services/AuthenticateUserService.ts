@@ -41,6 +41,7 @@ class AuthenticateUserService {
     const token = sign(
       {
         status: user.status,
+        name: user.name,
       },
       this.secret,
       {
