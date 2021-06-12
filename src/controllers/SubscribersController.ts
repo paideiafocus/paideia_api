@@ -28,7 +28,7 @@ class SubscribersController {
       s.live_with_father, s.live_with_alone, s.live_qtd, s.live_time, s.live_type, s.study_why, s.music, s.no_activity, s.genre, s.tv,
       s.work_candidate, s.work_father, s.transport, s.participate_ead, s.understand_ead, s.local_quarantine, s.unprotected_people,
       s.responsibilities, s.smartphone, s.internet_smartphone, s.internet_smartphone_limit, s.equips, s.pc_shared, s.study_local,
-      s.internet_quality`;
+      s.internet_quality, s.work_study`;
 
     const query = `
       SELECT ${userColumns}, ${candidateColumns}, ${socioeconomicColumns} FROM candidates c
@@ -62,7 +62,7 @@ class SubscribersController {
       s.live_with_father, s.live_with_alone, s.live_qtd, s.live_time, s.live_type, s.study_why, s.music, s.no_activity, s.genre, s.tv,
       s.work_candidate, s.work_father, s.transport, s.participate_ead, s.understand_ead, s.local_quarantine, s.unprotected_people,
       s.responsibilities, s.smartphone, s.internet_smartphone, s.internet_smartphone_limit, s.equips, s.pc_shared, s.study_local,
-      s.internet_quality`;
+      s.internet_quality, s.work_study`;
 
     const query = `
       SELECT ${userColumns}, ${candidateColumns}, ${socioeconomicColumns} FROM candidates c
