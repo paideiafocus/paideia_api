@@ -126,7 +126,7 @@ class SubscribersSocioeconomicController {
     });
 
     const subscribersTotal = users.length - 1;
-    const enrollment = subscribersTotal + 1935;
+    const enrollment = subscribersTotal + 2209;
     const userUpdate = {
       status: '',
       enrollment,
@@ -146,9 +146,11 @@ class SubscribersSocioeconomicController {
       'emails',
       'termo_responsabilidade.pdf',
     );
+
     const variables = {
       name: subscriber.name,
-      enrollment: subscriber.enrollment,
+      // enrollment: subscriber.enrollment,
+      enrollment,
       description: 'lista regular',
     };
 
