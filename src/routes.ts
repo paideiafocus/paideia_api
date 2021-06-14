@@ -1,4 +1,5 @@
 import { Request, Response, Router } from 'express';
+import SimuladoController from './controllers/SimuladoController';
 import RecoverPasswordController from './controllers/RecoverPasswordController';
 import SessionController from './controllers/SessionController';
 import SubscribersCandidatesController from './controllers/SubscribersCandidatesController';
@@ -17,6 +18,7 @@ const subscribersSocioeconomicController = new SubscribersSocioeconomicControlle
 const subscribersFilesController = new SubscribersFilesController();
 const subscribersController = new SubscribersController();
 const recoverPasswordController = new RecoverPasswordController();
+const simuladoController = new SimuladoController();
 
 router.post('/teste', (request: Request, response: Response) => {
   return response.json({ ok: true });
@@ -37,5 +39,13 @@ router.post('/files', subscribersFilesController.store);
 router.get('/files/:userId', subscribersFilesController.index);
 router.get('/subscribers', subscribersController.index);
 router.get('/subscribers/:userId', subscribersController.show);
+
+// simulados
+router.post('/alunosimulado', simuladoController.createAlunoSimulado);
+router.get('/alunosimulado', simuladoController.showAlunoSimulado);
+router.get('/simuladoq1/:numModelo', simuladoController.getSimuladoQ1);
+router.get('/modelo', simuladoController.getNumeroModelo);
+router.post('/simulado', simuladoController.storeSimulado);
+router.get('/simulado', simuladoController.indexSimulado);
 
 export default router;
