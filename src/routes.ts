@@ -36,6 +36,7 @@ router.post('/candidate', subscribersCandidatesController.store);
 router.post('/socioeconomic', subscribersSocioeconomicController.store);
 router.post('/files', subscribersFilesController.store);
 
+// adm
 router.get('/files/:userId', subscribersFilesController.index);
 router.get('/subscribers', subscribersController.index);
 router.get('/subscribers/:userId', subscribersController.show);
@@ -47,5 +48,10 @@ router.get('/simuladoq1/:numModelo', simuladoController.getSimuladoQ1);
 router.get('/modelo', simuladoController.getNumeroModelo);
 router.post('/simulado', simuladoController.storeSimulado);
 router.get('/simulado', simuladoController.indexSimulado);
+router.post('/cadastraSimulado', simuladoController.cadastraSimulado);
+router.get('/cadastraSimulado', simuladoController.listaGabaritos);
+
+// gabaritos
+router.get('/gabaritosimples', simuladoController.gabaritoSimples);
 
 export default router;
