@@ -279,6 +279,31 @@ class SimuladoController {
 
     response.status(200).json(gabaritos[0]);
   }
+
+  async gabaritoCompletoAdm(request: Request, response: Response) {
+    const {
+      userToken: { id },
+    } = request.body;
+
+    const usersRepository = getCustomRepository(UsersRepository);
+    const user = await usersRepository.findOne({ id, status: 'admin' });
+
+    if (!user) {
+      throw new AppError('Unauthorized!', 401);
+    }
+
+    const gabaritosRepository = getCustomRepository(GabaritosRepository);
+
+    const query = `
+      SELECT u.name, u.lastname, s.id as question_id, s.user_id, s.modelo, s.pergunta, s.selecionado, s.acertou, g.materia
+      FROM simulados s INNER JOIN users u ON s.user_id = u.id
+      INNER JOIN gabaritos g ON g.pergunta = s.pergunta AND s.modelo = g.modelo ORDER BY u.name, s.pergunta
+    `;
+
+    const resultados = await gabaritosRepository.query(query);
+
+    response.status(200).json(resultados);
+  }
 }
 
 export default SimuladoController;

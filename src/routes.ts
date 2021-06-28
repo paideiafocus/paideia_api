@@ -53,5 +53,6 @@ router.get('/cadastraSimulado', simuladoController.listaGabaritos);
 
 // gabaritos
 router.get('/gabaritosimples', simuladoController.gabaritoSimples);
+router.get('/simuladoadmcompleto', simuladoController.gabaritoCompletoAdm);
 
 export default router;
