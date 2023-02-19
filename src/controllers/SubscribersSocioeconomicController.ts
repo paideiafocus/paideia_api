@@ -147,11 +147,17 @@ class SubscribersSocioeconomicController {
       'termo_responsabilidade.pdf',
     );
 
+    const date = new Date();
+    const year = date.getFullYear();
+    const month = date.getMonth();
+    const semester = month < 6 ? 'primeiro' : 'segundo';
+
     const variables = {
       name: subscriber.name,
-      // enrollment: subscriber.enrollment,
       enrollment,
       description: 'lista regular',
+      year,
+      semester,
     };
 
     if (subscribersTotal <= 79) {
