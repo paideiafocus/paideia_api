@@ -20,8 +20,8 @@ class SubscribersController {
 
     const candidatesRepository = getCustomRepository(CandidatesRepository);
 
-    const userColumns = `u.id as user_id, u.code, u.enrollment, u.name, u.lastname, u.email, u.status`;
-    const candidateColumns = `c.id as candidate_id, c.citizen, c.cpf, c.course, c.birth_date, c.rg, c.phone1`;
+    const userColumns = `u.id as user_id, u.code, u.enrollment, u.name, u.lastname, u.email, u.status, u.phone`;
+    const candidateColumns = `c.id as candidate_id, c.citizen, c.cpf, c.course, c.birth_date, c.rg, c.phone1, c.school_bus`;
     const socioeconomicColumns = `
       s.cinema, s.sports, s.exam_entrance, s.elementary_school, s.age, s.informed, s.internet, s.internet_activity, s.reading_activity,
       s.read, s.read_qtd, s.place, s.high_school, s.live_with_friend, s.live_with_grandfather, s.live_with_couple, s.live_with_mother,
@@ -55,7 +55,7 @@ class SubscribersController {
     const candidatesRepository = getCustomRepository(CandidatesRepository);
 
     const userColumns = `u.id as user_id, u.code, u.enrollment, u.name, u.lastname, u.email, u.status`;
-    const candidateColumns = `c.id as candidate_id, c.citizen, c.cpf, c.course, c.birth_date, c.rg, c.phone1`;
+    const candidateColumns = `c.id as candidate_id, c.citizen, c.cpf, c.course, c.birth_date, c.rg, c.phone1, c.school_bus`;
     const socioeconomicColumns = `
       s.cinema, s.sports, s.exam_entrance, s.elementary_school, s.age, s.informed, s.internet, s.internet_activity, s.reading_activity,
       s.read, s.read_qtd, s.place, s.high_school, s.live_with_friend, s.live_with_grandfather, s.live_with_couple, s.live_with_mother,
