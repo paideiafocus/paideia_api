@@ -171,7 +171,7 @@ export class CreateSocioeconomic1616723741573 implements MigrationInterface {
             name: 'responsibilities',
             type: 'varchar',
           },
-             {
+          {
             name: 'smartphone',
             type: 'varchar',
           },
@@ -187,7 +187,7 @@ export class CreateSocioeconomic1616723741573 implements MigrationInterface {
             name: 'equips',
             type: 'varchar',
           },
-             {
+          {
             name: 'pc_shared',
             type: 'varchar',
           },

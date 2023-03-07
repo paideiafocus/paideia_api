@@ -25,6 +25,9 @@ class User {
   password: string;
 
   @Column()
+  phone: string;
+
+  @Column()
   presence: string;
 
   @Column()
