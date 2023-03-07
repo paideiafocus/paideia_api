@@ -1,4 +1,4 @@
-import { Request, Response, Router } from 'express';
+import { Router } from 'express';
 import SimuladoController from './controllers/SimuladoController';
 import RecoverPasswordController from './controllers/RecoverPasswordController';
 import SessionController from './controllers/SessionController';
@@ -20,9 +20,6 @@ const subscribersController = new SubscribersController();
 const recoverPasswordController = new RecoverPasswordController();
 const simuladoController = new SimuladoController();
 
-router.post('/teste', (request: Request, response: Response) => {
-  return response.json({ ok: true });
-});
 router.post('/users', usersController.store);
 router.post('/auth', sessionController.store);
 router.post('/password/recover', recoverPasswordController.store);
@@ -32,7 +29,9 @@ router.put('/password/update', recoverPasswordController.update);
 router.use(ensureAuthenticated);
 router.get('/users/validate/token', usersController.execute);
 router.put('/auth/validate', sessionController.update);
+router.get('/candidate', subscribersCandidatesController.execute);
 router.post('/candidate', subscribersCandidatesController.store);
+router.get('/socioeconomic', subscribersSocioeconomicController.execute);
 router.post('/socioeconomic', subscribersSocioeconomicController.store);
 router.post('/files', subscribersFilesController.store);
 
