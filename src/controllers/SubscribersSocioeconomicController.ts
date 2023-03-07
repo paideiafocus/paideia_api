@@ -6,7 +6,7 @@ import {
   defaultEnrollment,
   limitRegularSubscribers,
   limitWaitingSubscribers,
-} from 'utils/constants';
+} from '../utils/constants';
 import SocioeconomicRepository from '../repositories/SubscribersSocioeconomicRepository';
 import UsersRepository from '../repositories/UsersRepository';
 import MailService from '../services/MailService';
