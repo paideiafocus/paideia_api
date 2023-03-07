@@ -51,6 +51,9 @@ class Candidate {
   @Column()
   phone2: string;
 
+  @Column()
+  school_bus: string;
+
   @CreateDateColumn()
   updated_at: Date;
 

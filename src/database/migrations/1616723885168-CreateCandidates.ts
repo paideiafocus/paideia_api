@@ -58,6 +58,10 @@ export class CreateCandidates1616723885168 implements MigrationInterface {
             type: 'varchar',
           },
           {
+            name: 'school_bus',
+            type: 'varchar',
+          },
+          {
             name: 'updated_at',
             type: 'timestamp',
             default: 'now()',
