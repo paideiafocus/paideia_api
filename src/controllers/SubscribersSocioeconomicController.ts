@@ -2,6 +2,11 @@ import { Request, Response } from 'express';
 import { getCustomRepository } from 'typeorm';
 import { resolve } from 'path';
 
+import {
+  defaultEnrollment,
+  limitRegularSubscribers,
+  limitWaitingSubscribers,
+} from 'utils/constants';
 import SocioeconomicRepository from '../repositories/SubscribersSocioeconomicRepository';
 import UsersRepository from '../repositories/UsersRepository';
 import MailService from '../services/MailService';
@@ -126,7 +131,7 @@ class SubscribersSocioeconomicController {
     });
 
     const subscribersTotal = users.length - 1;
-    const enrollment = subscribersTotal + 2209;
+    const enrollment = subscribersTotal + defaultEnrollment;
     const userUpdate = {
       status: '',
       enrollment,
@@ -160,9 +165,12 @@ class SubscribersSocioeconomicController {
       semester,
     };
 
-    if (subscribersTotal <= 79) {
+    if (subscribersTotal <= limitRegularSubscribers) {
       userUpdate.status = 'subscriber';
-    } else if (subscribersTotal > 79 && subscribersTotal <= 119) {
+    } else if (
+      subscribersTotal > limitRegularSubscribers &&
+      subscribersTotal <= limitWaitingSubscribers
+    ) {
       userUpdate.status = 'waiting';
       variables.description =
         'lista de espera (lembramos que você precisa participar de todas as etapas igualmente)';
@@ -182,6 +190,26 @@ class SubscribersSocioeconomicController {
     await usersRepository.update({ id }, userUpdate);
 
     return response.status(201).json(socioeconomic);
+  }
+
+  async execute(request: Request, response: Response) {
+    const {
+      userToken: { id },
+    } = request.body;
+
+    const socioeconomicRepository = getCustomRepository(
+      SocioeconomicRepository,
+    );
+
+    const socioeconomics = await socioeconomicRepository.find({ user_id: id });
+
+    if (socioeconomics.length === 0) {
+      return response.status(204).json({});
+    }
+
+    const [socioeconomic] = socioeconomics;
+
+    return response.status(200).json(socioeconomic);
   }
 }
 
