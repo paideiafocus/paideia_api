@@ -8,7 +8,7 @@ import MailService from '../services/MailService';
 
 class UsersController {
   async store(request: Request, response: Response) {
-    const { name, lastname, email, password } = request.body;
+    const { name, lastname, email, password, phone } = request.body;
 
     const usersRepository = getCustomRepository(UsersRepository);
 
@@ -26,8 +26,11 @@ class UsersController {
       lastname,
       email,
       password: hashedPassword,
+      phone,
       code,
       status: 'common',
+      enrollment: 0,
+      presence: '',
     });
     await usersRepository.save(user);
 
