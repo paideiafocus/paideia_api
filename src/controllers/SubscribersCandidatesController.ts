@@ -16,6 +16,7 @@ class SubscribersCandidatesController {
       rg,
       phone1,
       phone2,
+      school_bus,
     } = request.body;
 
     const candidatesRepository = getCustomRepository(CandidatesRepository);
@@ -27,15 +28,16 @@ class SubscribersCandidatesController {
         { user_id: id },
         {
           citizen,
-          birth_city,
+          birth_city: birth_city || '',
           cpf,
           course,
           birth_date,
-          state,
+          state: state || '',
           fullname,
           rg,
           phone1,
-          phone2,
+          phone2: phone2 || '',
+          school_bus,
         },
       );
 
@@ -45,19 +47,38 @@ class SubscribersCandidatesController {
     const newCandidate = candidatesRepository.create({
       user_id: id,
       citizen,
-      birth_city,
+      birth_city: birth_city || '',
       cpf,
       course,
       birth_date,
-      state,
+      state: state || '',
       fullname,
       rg,
       phone1,
-      phone2,
+      phone2: phone2 || '',
+      school_bus,
     });
     await candidatesRepository.save(newCandidate);
 
     return response.status(201).json(newCandidate);
+  }
+
+  async execute(request: Request, response: Response) {
+    const {
+      userToken: { id },
+    } = request.body;
+
+    const candidatesRepository = getCustomRepository(CandidatesRepository);
+
+    const candidates = await candidatesRepository.find({ user_id: id });
+
+    if (candidates.length === 0) {
+      return response.status(204).json({});
+    }
+
+    const [candidate] = candidates;
+
+    return response.status(200).json(candidate);
   }
 }
 
