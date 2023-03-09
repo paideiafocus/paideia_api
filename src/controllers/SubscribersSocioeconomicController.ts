@@ -106,90 +106,103 @@ class SubscribersSocioeconomicController {
       study_local,
       internet_quality,
     };
-
-    const socioeconomicRepository = getCustomRepository(
-      SocioeconomicRepository,
-    );
-
-    const socioeconomics = await socioeconomicRepository.find({ user_id: id });
-
-    if (socioeconomics.length !== 0) {
-      await socioeconomicRepository.update({ user_id: id }, bodyData);
-      return response.status(200).json(socioeconomics);
-    }
-
-    const socioeconomic = socioeconomicRepository.create({
-      user_id: id,
-      ...bodyData,
-    });
-    await socioeconomicRepository.save(socioeconomic);
-
+    let statusCode = 201;
+    let sendEmail = true;
     const usersRepository = getCustomRepository(UsersRepository);
 
     const users = await usersRepository.find({
       where: [{ status: 'subscriber' }, { id }],
     });
 
-    const subscribersTotal = users.length - 1;
-    const enrollment = subscribersTotal + defaultEnrollment;
-    const userUpdate = {
-      status: '',
-      enrollment,
-    };
     const subscriber = users.find((user: User) => user.id === id);
-    const templatePath = resolve(
-      __dirname,
-      '..',
-      'views',
-      'emails',
-      'userSubscriber.hbs',
-    );
-    const filePath = resolve(
-      __dirname,
-      '..',
-      'views',
-      'emails',
-      'termo_responsabilidade.pdf',
+
+    const socioeconomicRepository = getCustomRepository(
+      SocioeconomicRepository,
     );
 
-    const date = new Date();
-    const year = date.getFullYear();
-    const month = date.getMonth();
-    const semester = month < 6 ? 'primeiro' : 'segundo';
+    const socioeconomics = await socioeconomicRepository.find({ user_id: id });
+    let bodyResponse = bodyData;
 
-    const variables = {
-      name: subscriber.name,
-      enrollment,
-      description: 'lista regular',
-      year,
-      semester,
-    };
-
-    if (subscribersTotal <= limitRegularSubscribers) {
-      userUpdate.status = 'subscriber';
+    if (socioeconomics.length !== 0 && subscriber.status === 'subscriber') {
+      await socioeconomicRepository.update({ user_id: id }, bodyData);
+      statusCode = 200;
+      sendEmail = false;
     } else if (
-      subscribersTotal > limitRegularSubscribers &&
-      subscribersTotal <= limitWaitingSubscribers
+      socioeconomics.length !== 0 &&
+      subscriber.status !== 'subscriber'
     ) {
-      userUpdate.status = 'waiting';
-      variables.description =
-        'lista de espera (lembramos que você precisa participar de todas as etapas igualmente)';
+      await socioeconomicRepository.update({ user_id: id }, bodyData);
     } else {
-      // lista cheia (send mail)
+      const socioeconomic = socioeconomicRepository.create({
+        user_id: id,
+        ...bodyData,
+      });
+      await socioeconomicRepository.save(socioeconomic);
+      bodyResponse = socioeconomic;
     }
 
-    const mailService = new MailService();
-    await mailService.execute({
-      to: subscriber.email,
-      subject: 'Confirmação de inscrição',
-      variables,
-      templatePath,
-      filePath,
-    });
+    if (sendEmail) {
+      const subscribersTotal = users.length - 1;
+      const enrollment = subscribersTotal + defaultEnrollment;
+      const userUpdate = {
+        status: '',
+        enrollment,
+      };
 
-    await usersRepository.update({ id }, userUpdate);
+      const templatePath = resolve(
+        __dirname,
+        '..',
+        'views',
+        'emails',
+        'userSubscriber.hbs',
+      );
+      const filePath = resolve(
+        __dirname,
+        '..',
+        'views',
+        'emails',
+        'termo_responsabilidade.pdf',
+      );
 
-    return response.status(201).json(socioeconomic);
+      const date = new Date();
+      const year = date.getFullYear();
+      const month = date.getMonth();
+      const semester = month < 6 ? 'primeiro' : 'segundo';
+
+      const variables = {
+        name: subscriber.name,
+        enrollment,
+        description: 'lista regular',
+        year,
+        semester,
+      };
+
+      if (subscribersTotal <= limitRegularSubscribers) {
+        userUpdate.status = 'subscriber';
+      } else if (
+        subscribersTotal > limitRegularSubscribers &&
+        subscribersTotal <= limitWaitingSubscribers
+      ) {
+        userUpdate.status = 'waiting';
+        variables.description =
+          'lista de espera (lembramos que você precisa participar de todas as etapas igualmente)';
+      } else {
+        // lista cheia (send mail)
+      }
+
+      const mailService = new MailService();
+      await mailService.execute({
+        to: subscriber.email,
+        subject: 'Confirmação de inscrição',
+        variables,
+        templatePath,
+        filePath,
+      });
+
+      await usersRepository.update({ id }, userUpdate);
+    }
+
+    return response.status(statusCode).json(bodyResponse);
   }
 
   async execute(request: Request, response: Response) {
