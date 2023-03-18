@@ -21,6 +21,7 @@ const recoverPasswordController = new RecoverPasswordController();
 const simuladoController = new SimuladoController();
 
 router.post('/users', usersController.store);
+router.get('/users/limit', usersController.index);
 router.post('/auth', sessionController.store);
 router.post('/password/recover', recoverPasswordController.store);
 router.post('/password/validate', recoverPasswordController.show);

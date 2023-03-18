@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 import { getCustomRepository } from 'typeorm';
 import { hash } from 'bcryptjs';
 import { resolve } from 'path';
+import { limitWaitingSubscribers } from '../utils/constants';
 import { AppError } from '../errors/AppError';
 import UsersRepository from '../repositories/UsersRepository';
 import MailService from '../services/MailService';
@@ -57,6 +58,24 @@ class UsersController {
     delete user.status;
 
     response.status(201).json(user);
+  }
+
+  async index(request: Request, response: Response) {
+    const usersRepository = getCustomRepository(UsersRepository);
+
+    const usersSubscribers = await usersRepository.find({
+      status: 'subscriber',
+    });
+
+    let isLimited = false;
+
+    const subscribersTotal = usersSubscribers.length - 1;
+
+    if (subscribersTotal === limitWaitingSubscribers) {
+      isLimited = true;
+    }
+
+    response.status(200).json({ isLimited });
   }
 
   async execute(request: Request, response: Response) {
