@@ -27,6 +27,8 @@ class SimuladoController {
         user_id: id,
         horaInicio,
         horaFimMax,
+        horaFimMin: '',
+        horaEnvio: '',
       });
       await alunoSimuladosRepository.save(newAlunoSimulado);
 
@@ -297,7 +299,9 @@ class SimuladoController {
     const query = `
       SELECT u.name, u.lastname, s.id as question_id, s.user_id, s.modelo, s.pergunta, s.selecionado, s.acertou, g.materia
       FROM simulados s INNER JOIN users u ON s.user_id = u.id
-      INNER JOIN gabaritos g ON g.pergunta = s.pergunta AND s.modelo = g.modelo ORDER BY u.name, s.pergunta
+      INNER JOIN gabaritos g ON g.pergunta = s.pergunta AND s.modelo = g.modelo
+      GROUP BY s.pergunta, s.user_id
+      ORDER BY u.name, s.pergunta
     `;
 
     const resultados = await gabaritosRepository.query(query);
