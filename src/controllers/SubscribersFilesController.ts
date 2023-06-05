@@ -32,6 +32,25 @@ class SubscribersFilesController {
     return response.status(201).json(newFiles);
   }
 
+  async verify(request: Request, response: Response) {
+    const {
+      userToken: { id },
+    } = request.body;
+
+    const usersRepository = getCustomRepository(UsersRepository);
+    const user = await usersRepository.findOne({ id });
+
+    if (!user) {
+      throw new AppError('Unauthorized!', 401);
+    }
+
+    const filesRepository = getCustomRepository(FilesRepository);
+
+    const files = await filesRepository.find({ user_id: id });
+
+    response.json(!!files[0]?.id);
+  }
+
   async index(request: Request, response: Response) {
     const {
       userToken: { id },

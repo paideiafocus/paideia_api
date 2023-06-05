@@ -35,6 +35,7 @@ router.post('/candidate', subscribersCandidatesController.store);
 router.get('/socioeconomic', subscribersSocioeconomicController.execute);
 router.post('/socioeconomic', subscribersSocioeconomicController.store);
 router.post('/files', subscribersFilesController.store);
+router.post('/files/verify', subscribersFilesController.verify);
 
 // adm
 router.get('/files/:userId', subscribersFilesController.index);
