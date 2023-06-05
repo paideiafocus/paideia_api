@@ -167,7 +167,7 @@ class SubscribersSocioeconomicController {
       const date = new Date();
       const year = date.getFullYear();
       const month = date.getMonth();
-      const semester = month < 6 ? 'primeiro' : 'segundo';
+      const semester = month < 5 ? 'primeiro' : 'segundo';
 
       const variables = {
         name: subscriber.name,
