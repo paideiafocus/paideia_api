@@ -157,6 +157,7 @@ class SimuladoController {
       resp_b,
       resp_c,
       resp_d,
+      resp_e,
       correta,
       img,
     } = request.body;
@@ -177,7 +178,7 @@ class SimuladoController {
     const B = resp_b;
     const C = resp_c;
     const D = resp_d;
-    // let E = req.body.resp_e;
+    const E = resp_e; // unesp
 
     function proximaLetra(letra) {
       let proxima = letra;
@@ -192,14 +193,14 @@ class SimuladoController {
           proxima = 'd';
           break;
         case 'd':
-          // proxima = "e";
-          proxima = 'a';
+          proxima = 'e'; // unesp
+          // proxima = 'a';
           break;
+        case 'e': // unesp
+          proxima = 'a'; // unesp
+          break; // unesp
         default:
           break;
-        // case "e":
-        //   proxima = "a";
-        //   break;
       }
       return proxima;
     }
@@ -220,7 +221,7 @@ class SimuladoController {
         resp_b: B,
         resp_c: C,
         resp_d: D,
-        // resp_e: E,
+        resp_e: E, // unesp
         correta: certaModelo1,
         img,
       },
@@ -229,11 +230,12 @@ class SimuladoController {
         pergunta: numeroPergunta,
         materia: diciplina,
         enunciado: questao,
-        resp_a: D,
+        // resp_a: D,
+        resp_a: E, // unesp
         resp_b: A,
         resp_c: B,
         resp_d: C,
-        // resp_e: D,
+        resp_e: D, // unesp
         correta: certaModelo2,
         img,
       },
@@ -242,11 +244,13 @@ class SimuladoController {
         pergunta: numeroPergunta,
         materia: diciplina,
         enunciado: questao,
-        resp_a: C,
-        resp_b: D,
+        // resp_a: C,
+        // resp_b: D,
+        resp_a: D, // unesp
+        resp_b: E, // unesp
         resp_c: A,
         resp_d: B,
-        // resp_e: C,
+        resp_e: C, // unesp
         correta: certaModelo3,
         img,
       },
@@ -255,11 +259,14 @@ class SimuladoController {
         pergunta: numeroPergunta,
         materia: diciplina,
         enunciado: questao,
-        resp_a: B,
-        resp_b: C,
-        resp_c: D,
+        // resp_a: B,
+        // resp_b: C,
+        // resp_c: D,
+        resp_a: C,
+        resp_b: D,
+        resp_c: E,
         resp_d: A,
-        // resp_e: B,
+        resp_e: B, // unesp
         correta: certaModelo4,
         img,
       },
